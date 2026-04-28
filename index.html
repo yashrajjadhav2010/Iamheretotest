@@ -4215,9 +4215,9 @@
         }
 
         // ==========================================
-        // Y INFINITY AI ASSISTANT LOGIC (GEMINI)
+        // Y INFINITY AI ASSISTANT LOGIC (GROQ)
         // ==========================================
-        const GEMINI_API_KEY = "AIzaSyCBZvhr7J9NGBFMg_BuZfwR3xiwJTdWRjU";
+        const GROQ_API_KEY = "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";
         const AI_NAME = "Y Infinity";
 
         const COMPANY_BIO = `
@@ -4276,7 +4276,7 @@
             div.innerHTML = processedText;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
-            chatHistory.push({ role: "model", parts: [{ text: text }] });
+            chatHistory.push({ role: "assistant", content: text });
         }
 
         function addUserMessage(text) {
@@ -4286,7 +4286,7 @@
             div.innerText = text;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
-            chatHistory.push({ role: "user", parts: [{ text: text }] });
+            chatHistory.push({ role: "user", content: text });
         }
 
         async function handleAISend() {
@@ -4299,7 +4299,7 @@
             document.getElementById('ai-typing').style.display = 'block';
 
             try {
-                const response = await callGemini(text);
+                const response = await callGroq(text);
                 document.getElementById('ai-typing').style.display = 'none';
                 addAIMessage(response);
             } catch (error) {
@@ -4309,7 +4309,7 @@
                 let errorMsg = "I'm happy to inform you that ";
                 if (window.location.protocol === 'file:') {
                     errorMsg += "<b>Our Y Infinity AI is being upgraded to a more advanced version. This is a revolutionary step to enhance your shopping experience..... Stay Tuned!!</b>  ";
-                } else if (error.message.includes("403")) {
+                } else if (error.message.includes("403") || error.message.includes("401")) {
                     errorMsg += "<b>This is a revolutionary step to enhance your shopping experience.</b>";
                 } else {
                     errorMsg += "Stay Tuned!!";
@@ -4318,9 +4318,8 @@
             }
         }
 
-        async function callGemini(userPrompt) {
-            // Corrected model: gemini-1.5-flash
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        async function callGroq(userPrompt) {
+            const endpoint = `https://api.groq.com/openai/v1/chat/completions`;
 
             const systemPrompt = `
                 You are "${AI_NAME}", a helpful AI assistant for "Yashraj Frames".
@@ -4336,16 +4335,22 @@
                 4. Supported languages: English, Hindi, Marathi. Respond in the language the user speaks.
             `;
 
+            const messages = [
+                { role: "system", content: systemPrompt },
+                ...chatHistory
+            ];
+
             const body = {
-                system_instruction: {
-                    parts: { text: systemPrompt }
-                },
-                contents: chatHistory
+                model: "llama-3.1-8b-instant",
+                messages: messages
             };
 
             const resp = await fetch(endpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${GROQ_API_KEY}`
+                },
                 body: JSON.stringify(body)
             });
 
@@ -4355,8 +4360,8 @@
             }
 
             const data = await resp.json();
-            if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
-                return data.candidates[0].content.parts[0].text;
+            if (data.choices && data.choices[0].message && data.choices[0].message.content) {
+                return data.choices[0].message.content;
             } else {
                 throw new Error("Invalid response format");
             }

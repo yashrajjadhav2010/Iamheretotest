@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Yashraj Frames</title>
-    <link rel="icon" type="png" href="https://i.ibb.co/60vv3MMt/yicon4.png">
+    <link rel="icon" type="png" href="https://i.ibb.co/1GBf2HBQ/yinfinity-logo-final.png">
 
     <title>CHOUNDESHWARI DIGITAL & YASHRAJ PHOTO FRAMES | Premium Studio</title>
     <meta name="description"
@@ -1755,10 +1755,24 @@
         }
 
         #ai-fab.active {
-            transform: rotate(45deg);
             background: var(--danger);
             color: #fff;
             border-color: transparent;
+        }
+
+        #ai-fab .fab-icon {
+            display: none;
+            position: absolute;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #ai-fab.active .fab-logo {
+            display: none;
+        }
+
+        #ai-fab.active .fab-icon {
+            display: block;
+            transform: rotate(45deg);
         }
 
         #ai-chat-window {
@@ -1769,12 +1783,12 @@
             max-width: calc(100vw - 40px);
             height: 500px;
             max-height: 70vh;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(30px) saturate(150%);
+            -webkit-backdrop-filter: blur(30px) saturate(150%);
             border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), 0 0 20px rgba(197, 160, 89, 0.2);
             display: none;
             flex-direction: column;
             z-index: 998;
@@ -1787,8 +1801,9 @@
         [data-theme="royal"] #ai-chat-window,
         [data-theme="forest"] #ai-chat-window,
         [data-theme="midnight"] #ai-chat-window {
-            background: rgba(22, 22, 22, 0.85);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 15, 15, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(197, 160, 89, 0.1);
         }
 
         @keyframes chatSlideIn {
@@ -1803,25 +1818,42 @@
             }
         }
 
+        @keyframes gradientPulse {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         .ai-header {
             padding: 20px;
-            background: linear-gradient(90deg, var(--accent), #e0c388);
+            background: linear-gradient(270deg, var(--accent), #e0c388, #b8860b, var(--accent));
+            background-size: 200% 200%;
+            animation: gradientPulse 4s ease infinite;
             color: #000;
             display: flex;
             align-items: center;
             gap: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .ai-header img {
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            border: 2px solid #fff;
         }
 
         .ai-header h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.1rem;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
         }
 
         #ai-messages {
@@ -1841,41 +1873,86 @@
             font-size: 0.9rem;
             line-height: 1.4;
             position: relative;
-            animation: msgPop 0.3s ease-out;
+            animation: msgPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         @keyframes msgPop {
             from {
                 opacity: 0;
-                transform: scale(0.8);
+                transform: translateY(15px) scale(0.9);
             }
 
             to {
                 opacity: 1;
-                transform: scale(1);
+                transform: translateY(0) scale(1);
             }
         }
 
         .msg-user {
             align-self: flex-end;
-            background: var(--primary);
-            color: var(--bg);
+            background: linear-gradient(135deg, var(--accent), #e0c388);
+            color: #000;
             border-bottom-right-radius: 5px;
+            font-weight: 500;
         }
 
         .msg-ai {
             align-self: flex-start;
             background: var(--surface);
-            color: var(--primary);
+            color: var(--text-main);
             border-bottom-left-radius: 5px;
             border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent);
+        }
+
+        .ai-quick-chips {
+            display: flex;
+            gap: 8px;
+            padding: 10px 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        [data-theme="dark"] .ai-quick-chips,
+        [data-theme="royal"] .ai-quick-chips,
+        [data-theme="forest"] .ai-quick-chips,
+        [data-theme="midnight"] .ai-quick-chips {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .ai-quick-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ai-chip {
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .ai-chip:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
         }
 
         .ai-input-area {
             padding: 15px;
             display: flex;
             gap: 10px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(197, 160, 89, 0.2);
+            background: rgba(0, 0, 0, 0.03);
         }
 
         .ai-input {
@@ -2095,6 +2172,32 @@
                 </div>
             </div>
 
+            <!-- Y Infinity AI Promotion Container -->
+            <div onclick="toggleAIChat()" class="ai-promo-box"
+                style="position: relative; overflow: hidden; background: linear-gradient(135deg, var(--bg) 0%, #151515 100%); padding: 25px; border-radius: 20px; margin-top: 30px; text-align: left; border: 1px solid var(--border-color); cursor: pointer; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: transform 0.2s, border-color 0.2s;">
+
+                <div
+                    style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, rgba(197,160,89,0.05) 0%, transparent 45%); animation: spinGlow 15s linear infinite; pointer-events: none; z-index: 0;">
+                </div>
+
+                <div style="position: relative; z-index: 2; flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <img src="https://i.ibb.co/1GBf2HBQ/yinfinity-logo-final.png"
+                            style="width: 28px; height: 28px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <h3
+                            style="font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.2rem; margin: 0;">
+                            Meet Y Infinity</h3>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--secondary); margin: 0; line-height: 1.4;">
+                        Your personal AI shopping assistant. Ask me to find, suggest, or customize any frame!</p>
+                </div>
+
+                <div
+                    style="position: relative; z-index: 2; margin-left: 15px; width: 45px; height: 45px; border-radius: 50%; background: rgba(197, 160, 89, 0.1); border: 1px solid rgba(197, 160, 89, 0.2); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1.1rem; flex-shrink: 0;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+            </div>
+
             <div
                 style="position: relative; overflow: hidden; background: linear-gradient(145deg, #111 0%, #1a1a1a 100%); padding: 30px 25px; border-radius: 20px; margin-top: 30px; text-align: left; border: 1px solid rgba(197, 160, 89, 0.4); box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
                 <!-- Animated Glare -->
@@ -2135,6 +2238,8 @@
                     </button>
                 </div>
             </div>
+
+
 
             <div class="section-title" style="margin-top: 30px;">
                 <div data-i18n="home_trend">Trending Frames</div>
@@ -2802,8 +2907,8 @@
                     <i class="fa-solid fa-expand"></i> <span data-i18n="pdp_zoom">Tap to Zoom</span>
                 </div>
 
-                <div style="position:absolute; bottom:-22px; left:50%; transform: translateX(-50%); background: linear-gradient(90deg, #c5a059, #e0c388); padding: 12px 25px; border-radius: 30px; color: #000; font-weight: 800; font-size: 0.85rem; box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4); cursor: pointer; display: flex; align-items: center; gap: 8px; z-index: 5; white-space: nowrap;"
-                    onclick="closeProduct(); nav('visualizer', document.querySelector('.nav-item:nth-child(3)'))">
+                <div id="view-try-room-btn"
+                    style="position:absolute; bottom:-22px; left:50%; transform: translateX(-50%); background: linear-gradient(90deg, #c5a059, #e0c388); padding: 12px 25px; border-radius: 30px; color: #000; font-weight: 800; font-size: 0.85rem; box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4); cursor: pointer; display: flex; align-items: center; gap: 8px; z-index: 5; white-space: nowrap;">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Try in Your Room
                 </div>
             </div>
@@ -2949,6 +3054,46 @@
             { id: 36, name: "Birthday Reminder Calendar Photo Frame | Personalised Family Birthday & Anniversary Calendar Frame Wall Decor Gift", price: 549, cat: "custom", img: "https://i.ibb.co/GrLgHmg/71-Wd2vt-X4-L-SX569.png" },
         ];
 
+        // SEO Schema Generator (JSON-LD) for Google Rich Snippets
+        function injectSEOSchema() {
+            const schemaData = products.map(p => ({
+                "@context": "https://schema.org/",
+                "@type": "Product",
+                "name": p.name,
+                "image": p.img,
+                "description": `Premium quality ${p.name} photo frame. Water-resistant, dust-proof, with a high-definition finish. Perfect for home decor or gifting.`,
+                "brand": {
+                    "@type": "Brand",
+                    "name": "Yashraj Frames"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "url": `${window.location.origin}${window.location.pathname}?product=${p.id}`,
+                    "priceCurrency": "INR",
+                    "price": p.price,
+                    "availability": "https://schema.org/InStock",
+                    "seller": {
+                        "@type": "Organization",
+                        "name": "Choundeshwari Digital & Yashraj Photo Frame"
+                    }
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.8",
+                    "reviewCount": "120"
+                }
+            }));
+
+            const script = document.createElement('script');
+            script.type = "application/ld+json";
+            script.text = JSON.stringify(schemaData);
+            document.head.appendChild(script);
+        }
+
+        // Initialize SEO
+        injectSEOSchema();
+
+
         // Multilingual Setup
         const i18n = {
             "en": {
@@ -3037,7 +3182,7 @@
                 title.innerText = i18n[lang].about_us;
                 content.innerHTML = `
                     <div style="text-align:left; font-family:'Urbanist', sans-serif;">
-                        <img src="https://i.ibb.co/60vv3MMt/yicon4.png" style="width:60px; margin-bottom:20px; border-radius:15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <img src="https://i.ibb.co/1GBf2HBQ/yinfinity-logo-final.png" style="width:60px; margin-bottom:20px; border-radius:15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                         <h3 style="font-family:'Playfair Display', serif; font-size:1.6rem; color:var(--primary); margin-bottom:15px; line-height:1.2;">Crafting Legacy Since Day One</h3>
                         <p style="margin-bottom:15px; font-size:0.95rem; color:var(--secondary); line-height:1.6;">Founded by <b>Madhavrao Jadhav</b> and driven by a family passion for preserving memories, <b>Choundeshwari Digital & Yashraj Photo Frames</b> is a highly acclaimed premium photography and framing studio located in the heart of Jafrabad.</p>
                         
@@ -3390,12 +3535,17 @@
         }
 
         function handleOrientation(event) {
+            // Safety check for devices without gyroscope sensors or unsupported browsers
+            if (event.gamma === null || event.beta === null) return;
+
             if (document.getElementById('visualizer').classList.contains('active')) {
                 const frame = document.getElementById('frame-overlay');
+                if (!frame) return;
+
                 // Gamma is left-to-right tilt (range -90 to 90)
                 // Beta is front-to-back tilt (range -180 to 180)
-                let x = event.gamma;
-                let y = event.beta - 45; // Offset for typical phone holding angle
+                let x = event.gamma || 0;
+                let y = (event.beta || 0) - 45; // Offset for typical phone holding angle
 
                 // Intuitively move the frame WITH the tilt (Positive Parallax)
                 // Sensitivity adjustment
@@ -3740,6 +3890,17 @@
             buyBtn.onclick = () => {
                 window.open(`https://wa.me/917588598293?text=Hi, I want to buy *${p.name}* - Rs. ${p.price}`);
             };
+
+            const tryRoomBtn = document.getElementById('view-try-room-btn');
+            const tryRoomMobileBtn = document.getElementById('view-try-room-mobile-btn');
+
+            const handleTryRoom = () => {
+                closeProduct();
+                previewFrame(p.id);
+            };
+
+            if (tryRoomBtn) tryRoomBtn.onclick = handleTryRoom;
+            if (tryRoomMobileBtn) tryRoomMobileBtn.onclick = handleTryRoom;
 
             const shareBtn = document.getElementById('view-share-btn');
             if (shareBtn) {
@@ -4295,6 +4456,12 @@
             chatHistory.push({ role: "user", content: text });
         }
 
+        function sendQuickAction(text) {
+            const input = document.getElementById('ai-input-text');
+            input.value = text;
+            handleAISend();
+        }
+
         async function handleAISend() {
             const input = document.getElementById('ai-input-text');
             const text = input.value.trim();
@@ -4439,12 +4606,14 @@
     </div>
     <!-- Y Infinity AI Assistant UI -->
     <div id="ai-fab" onclick="toggleAIChat()">
-        <i class="fa-solid fa-infinity"></i>
+        <img class="fab-logo" src="https://i.ibb.co/1GBf2HBQ/yinfinity-logo-final.png" alt="AI"
+            style="width:75%; height:75%; object-fit:contain;">
+        <i class="fa-solid fa-infinity fab-icon"></i>
     </div>
 
     <div id="ai-chat-window">
         <div class="ai-header">
-            <img src="https://i.ibb.co/60vv3MMt/yicon4.png" alt="Y Infinity">
+            <img src="https://i.ibb.co/1GBf2HBQ/yinfinity-logo-final.png" alt="Y Infinity">
             <div>
                 <h3 id="ai-name-header">Y Infinity</h3>
                 <small style="opacity: 0.8; font-size: 0.7rem;">AI Shopping Assistant</small>
@@ -4462,8 +4631,16 @@
                 <span class="typing-text">Y Infinity is thinking...</span>
             </div>
         </div>
+        <div class="ai-quick-chips">
+            <div class="ai-chip" onclick="sendQuickAction('Suggest a premium photo frame')">Suggest a Frame</div>
+            <div class="ai-chip" onclick="sendQuickAction('Do you have Chatrapati Shivaji Maharaj frames?')">Shivaji
+                Maharaj Frames</div>
+            <div class="ai-chip" onclick="sendQuickAction('How can I track my order?')">Track Order</div>
+            <div class="ai-chip" onclick="sendQuickAction('Can you frame my wedding photo?')">Wedding Photos</div>
+        </div>
         <div class="ai-input-area">
-            <input type="text" id="ai-input-text" class="ai-input" placeholder="Ask Y Infinity...">
+            <input type="text" id="ai-input-text" class="ai-input" placeholder="Ask Y Infinity..."
+                onkeypress="if(event.key === 'Enter') handleAISend()">
             <button class="ai-send" onclick="handleAISend()">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
